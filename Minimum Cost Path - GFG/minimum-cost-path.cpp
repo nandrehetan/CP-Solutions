@@ -7,8 +7,6 @@ using namespace std;
 
 class Solution {
 public:
-    //Function to return the minimum cost to reach
-    //the bottom right cell from the top left cell.
     bool isValid(int n, int m, int i, int j) {
         return (i >= 0 && j >= 0 && i < n && j < m);
     }
