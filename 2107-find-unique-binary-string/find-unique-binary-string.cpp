@@ -2,8 +2,7 @@ class Solution {
 public:
     string findDifferentBinaryString(vector<string>& nums) {
         int n=nums.size();
-        vector<string>v;
-
+        sort(nums.begin(),nums.end());
         for(int i=0;i<(1<<n);i++){
             string s="";
             for(int j=0;j<n;j++){
@@ -13,19 +12,12 @@ public:
                     s += '0';
                 }
             }
-            v.push_back(s);
-            // cout<<s<<endl;
-        }
-
-        sort(nums.begin(),nums.end());
-
-        for(string it:v){
-            // cout<<it<<endl;
-            bool bs = binary_search(nums.begin(),nums.end(),it);
+            bool bs = binary_search(nums.begin(),nums.end(),s);
 
             if(!bs){
-                return it;
+                return s;
             }
+            // cout<<s<<endl;
         }
         return "";
     }
