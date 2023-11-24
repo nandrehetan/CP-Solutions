@@ -9,7 +9,7 @@ public:
                }
         }
         sort(v.begin(),v.end());
-        cout<<v<<endl;
+        // cout<<v<<endl;
         string ans = "";
 
         int cur=0;
@@ -19,7 +19,6 @@ public:
                s[i]=='A' || s[i]=='E' || s[i]=='I' || s[i]=='O' || s[i]=='U' ){
                    ans.push_back(v[cur]);
                    cur++;
-                //    i++;
                }
             else{
                 ans.push_back(s[i]);
