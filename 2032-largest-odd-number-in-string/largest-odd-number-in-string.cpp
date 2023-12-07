@@ -7,7 +7,7 @@ public:
             char ch = num[i];
             j++;
             int cur=ch-'0';
-            if(cur%2==1){
+            if(cur&1){
                 j=i;
                 string s = "";
                 for(int i=0;i<=j;i++){
