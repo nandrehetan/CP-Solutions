@@ -6,11 +6,8 @@ public:
         for(int i=n-1;i>=0;i--){
             char ch = num[i];
             j++;
-            // cout<<ch<<" ";
             int cur=ch-'0';
-            // cout<<cur<<" ";
             if(cur%2==1){
-                // cout<<cur<<endl;
                 j=i;
                 string s = "";
                 for(int i=0;i<=j;i++){
@@ -19,8 +16,6 @@ public:
                 return s;
             }
         }
-        
-        // cout<<s<<endl;
         return "";
     }
 };
