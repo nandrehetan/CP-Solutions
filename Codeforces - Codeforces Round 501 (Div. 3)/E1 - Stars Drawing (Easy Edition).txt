@@ -1,0 +1,389 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Aliases to op
+using ll = long long;
+using ull = unsigned long long;
+using ld = double;
+
+ 
+// Constants
+constexpr ll INF = 4e18;
+constexpr ld EPS = 1e-9;
+constexpr ll MOD = 1e9+7;
+ 
+// Macros
+#define F first
+#define S second
+#define all(x) begin(x), end(x)
+#define allr(x) rbegin(x), rend(x)
+typedef vector<int> vi;
+typedef pair<int,int> pi;
+#define pb push_back
+#define MP make_pair
+// #define endl '\n'
+#define rep(i,a,b) for (int i = a; i < b; i++)
+
+const ll mod = 998244353;
+ 
+ll inv(ll i) {if (i == 1) return 1; return (mod - ((mod / i) * inv(mod % i)) % mod) % mod;}
+ 
+ll mod_mul(ll a, ll b) {a = a % mod; b = b % mod; return (((a * b) % mod) + mod) % mod;}
+ 
+ll mod_add(ll a, ll b) {a = a % mod; b = b % mod; return (((a + b) % mod) + mod) % mod;}
+
+ll mod_sub(ll a, ll b) {a = a % mod; b = b % mod; return (((a - b + mod) % mod) + mod) % mod;}
+  
+ll ceil_div(ll a, ll b) {return a % b == 0 ? a / b : a / b + 1;}
+ 
+ll pwr(ll a, ll b) {a %= mod; ll res = 1; while (b > 0) {if (b & 1) res = res * a % mod; a = a * a % mod; b >>= 1;} return res;}
+
+vector<ll> sieve(int n) {int*arr = new int[n + 1](); vector<ll> vect; for (int i = 2; i <= n; i++)if (arr[i] == 0) {vect.push_back(i); for (int j = 2 * i; j <= n; j += i)arr[j] = 1;} return vect;}
+template <typename T> // cin >> vector<T>
+istream &operator>>(istream &istream, vector<T> &v)
+{
+    for (auto &it : v)
+        cin >> it;
+    return istream;
+}
+template <typename T> // cout << vector<T>
+ostream &operator<<(ostream &ostream, const vector<T> &c)
+{
+    for (auto &it : c)
+        cout << it << " ";
+    return ostream;
+}
+
+// Mathematical functions
+int GCD(int a, int b)
+{
+    while (b)
+    {
+        a %= b;
+        swap(a, b);
+    }
+    return a;
+}
+ 
+int GCD_extended(int a, int b, int &x, int &y)
+{
+    x = 1, y = 0;
+    int x1 = 0, y1 = 1, a1 = a, b1 = b;
+    while (b1)
+    {
+        int q = a1 / b1;
+        tie(x, x1) = make_tuple(x1, x - q * x1);
+        tie(y, y1) = make_tuple(y1, y - q * y1);
+        tie(a1, b1) = make_tuple(b1, a1 - q * b1);
+    }
+    return a1;
+}
+int LCM(int a, int b)
+{
+    return ((ll)a * b) / GCD(a, b);
+}
+ 
+ll modpow(ll x, ll n, int m = MOD)
+{
+    if (x == 0 && n == 0)
+        return 0; // undefined case
+    ll res = 1;
+    while (n > 0)
+    {
+        if (n % 2)
+            res = (res * x) % m;
+        x = (x * x) % m;
+        n /= 2;
+    }
+    return res;
+}
+ 
+int modinv(int x, int m = MOD)
+{
+    return modpow(x, m - 2, m);
+}
+ 
+mt19937 rng;
+int getRandomNumber(int l, int r)
+{
+    uniform_int_distribution<int> dist(l, r);
+    return dist(rng);
+}
+// bool cmp(pair<ll, ll>& a,
+//          pair<ll, ll>& b)
+// {
+//     return a.first < b.first;
+// } 
+
+
+
+ll binToDec(string s) { return bitset<64>(s).to_ullong(); }
+string decToBin(ll a) { return bitset<64>(a).to_string(); }
+
+ll andOperator(ll a, ll b)
+{
+    ll shiftcount = 0;
+ 
+    while (a != b and a > 0)
+    {
+        shiftcount++;
+        a = a >> 1;
+        b = b >> 1;
+    }
+    return int64_t(a << shiftcount);
+}
+ll factorial(ll n){
+    if (n==0){
+        return 1;
+    }
+    ll ans=1;
+    for (ll i=1;i<=n;i++){
+         ans=mod_mul(ans,i);
+    }
+    return ans;
+}
+int nCr(ll n, ll r) {
+    if (n<r){
+        return 0;
+    }
+    ll ans=factorial(n);
+    ans=mod_mul(ans,inv(factorial(r)));
+    ans=mod_mul(ans,inv(factorial(n-r)));
+    return ans;
+}
+
+
+ll lcm(ll a,ll b){
+    ll g=__gcd(a,b);
+    return (a*b/g);
+}
+ll helper(ll x){
+    ll d=sqrtl(x);
+    if (d*d==x){
+        return d;
+    }
+    else{
+        return d+1;
+    }
+}
+bool isPrime(ll n)
+{
+    if (n <= 1)
+        return false;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0)
+            return false;
+    }
+    return true;
+}
+
+
+long long int power(int base, int exp)
+{
+    if (exp == 0)
+       return 1;
+    else if (exp == 1)
+       return base;
+    else
+    {
+       long long int calc;
+       if (exp % 2 == 0)
+       {
+         calc = power(base, exp/2);
+         calc *= calc;
+       }
+       else
+       {
+         calc = base*power(base, exp-1);
+       }
+       return calc;
+    }
+}
+class Compare {
+public:
+    bool operator()(pair<int,int> a, pair<int,int> b)
+    {
+        int diff=a.second-a.first;
+        int diff2=b.second-b.first;
+
+        if (diff == diff2) {
+            return a.first>b.first;
+        }
+        
+        
+ 
+        return diff<diff2;
+        }
+};
+
+bool get(ll a,ll b, ll x){
+    if (a<b){
+        swap(a,b);
+    }
+    if (x==a || x==b){
+        return true;
+    }
+    if (a==0 || b==0){
+        return false;
+    }
+    return get(a%b,b,x);
+}
+
+bool sortbysec(const pair<ll,ll> a,
+              const pair<ll,ll> b)
+{
+    ll diff=a.first-a.second;
+    ll diff2=b.first-b.second;
+    return diff>diff2;
+ 
+}
+
+
+
+
+
+
+
+
+
+
+void solve(){
+    ll n,m;
+    cin>>n>>m;
+    vector<vector<int>>a(n,vector<int>(m));
+    vector<vector<int>>b(n,vector<int>(m,0));
+    for (int i=0;i<n;i++){
+        for (int j=0;j<m;j++){
+            char c;
+            cin>>c;
+            if (c=='.'){
+                a[i][j]=0;
+            }
+            else{
+                a[i][j]=1;
+            }
+        }
+    }
+    vector<vector<int>>ans;
+    for (int i=0;i<n;i++){
+        for (int j=0;j<m;j++){
+            if (a[i][j]==1){
+            int i1=i-1;
+            int j1=j-1;
+            int mx=1000;
+            int cnt=0;
+            while(i1>=0 && a[i1][j]==1){
+                cnt++;
+                i1--;
+            }
+            mx=min(mx,cnt);
+            cnt=0;
+            while(j1>=0 && a[i][j1]==1){
+                cnt++;
+                j1--;
+            }
+            mx=min(mx,cnt);
+            i1=i+1;
+            cnt=0;
+            while(i1<n && a[i1][j]==1){
+                cnt++;
+                i1++;
+            }
+            mx=min(mx,cnt);
+            j1=j+1;
+            cnt=0;
+            while(j1<m && a[i][j1]==1){
+                cnt++;
+                j1++;
+            }
+            mx=min(mx,cnt);
+            // cout << i << " " << j << " " << mx << endl;
+            if (mx!=0){
+                ans.pb({i+1,j+1,mx});
+                b[i][j]=1;
+                for (int k=1;k<=mx;k++){
+                    b[i+k][j]=1;
+                    b[i-k][j]=1;
+                    b[i][j+k]=1;
+                    b[i][j-k]=1;
+                }
+            }
+
+        }
+
+
+
+
+            
+        }
+    }
+    for (int i=0;i<n;i++){
+        for (int j=0;j<m;j++){
+            if (a[i][j]!=b[i][j]){
+                cout << -1 << endl;return;
+            }
+        }
+    }
+    cout << ans.size() << endl;
+    for (int i=0;i<ans.size();i++){
+        cout << ans[i] << endl;
+    }
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+
+
+    
+ 
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int t;
+    t=1;
+    while(t--){
+        solve();
+    }
+ 
+ 
+    return 0;
+}
