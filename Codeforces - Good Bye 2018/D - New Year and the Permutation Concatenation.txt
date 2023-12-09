@@ -1,0 +1,127 @@
+#include <bits/stdc++.h>
+using namespace std;
+// Constants
+#define PI 3.1415926535
+#define INF 4e18
+#define EPS 1e-9
+#define MOD 998244353
+
+// Aliases
+using ll = long long int;
+using ull = unsigned long long int;
+using ld = long double;
+
+// macros
+#define int long long
+#define all(s) s.begin(), s.end()
+#define pb push_back
+#define eb emplace_back
+#define ppc __builtin_popcount
+#define parity(x) __builtin_parity(x) // gives true for odd and false for even
+#define ppcll __builtin_popcountll
+#define msb(x) 63 - __builtin_clzll(x) // gives the most significant bit of the number
+#define sz(x) (int)x.size()
+#define F first
+#define acc accumulate
+#define S second
+#define amax(a, b) a = max(a, b)
+#define amin(a, b) a = min(a, b)
+
+// modular exponentiation
+int modpow(int x, int n, int m = MOD)
+{
+    if (x == 0 && n == 0)
+        return 0; // undefined case
+    int res = 1;
+    while (n)
+    {
+        if (n & 1)
+        {
+            res = ((res % m) * (x % m)) % m;
+        }
+        x = ((x % m) * (x % m)) % m;
+        n >>= 1;
+    }
+    return res;
+}
+
+int modinv(int x, int m = MOD)
+{
+    return modpow(x, m - 2, m);
+}
+// ncr i.e number of combinations
+const int factN = 1e6 + 10; // change this according to the need
+int fact[factN];
+int inv_fact[factN];
+void preNCR()
+{
+    fact[0] = 1;
+    fact[1] = 1;
+    inv_fact[0] = inv_fact[1] = modinv(1);
+    for (int i = 2; i < factN; i++)
+    {
+        fact[i] = i * fact[i - 1];
+        fact[i] %= MOD;
+        inv_fact[i] = modinv(fact[i]);
+    }
+}
+int ncr(int n, int r)
+{
+    if (n < r)
+    {
+        return 0;
+    }
+    int ans = fact[n];
+    ans %= MOD;
+    ans *= inv_fact[r];
+    ans %= MOD;
+    ans *= inv_fact[n - r];
+    ans %= MOD;
+    return ans;
+}
+int npr(int n, int r)
+{
+    if (n < r)
+    {
+        return 0;
+    }
+    int ans = fact[n];
+    ans %= MOD;
+    ans *= inv_fact[n - r];
+    ans %= MOD;
+    return ans;
+}
+void solve(int testcase)
+{
+    int n;
+    cin >> n;
+    int ans = fact[n] * n % MOD;
+    for (int k = 1; k <= n - 1; k++)
+    {
+        ans -= (fact[n] * inv_fact[k]) % MOD;
+        ans += MOD;
+        ans %= MOD;
+    }
+    cout << ans << endl;
+}
+
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    cout << fixed << setprecision(25);
+    cerr << fixed << setprecision(10);
+    auto start = std::chrono::high_resolution_clock::now();
+    int n = 1;
+    preNCR();
+    // cin >> n;
+    for (int i = 1; i <= n; i++)
+    {
+        solve(i);
+    }
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
+    // cerr << "Time taken : " << ((long double)duration.count())/((long double) 1e9) <<"s "<< endl;
+    return 0;
+}
