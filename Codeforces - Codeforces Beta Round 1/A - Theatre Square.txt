@@ -1,0 +1,17 @@
+#include <iostream>
+#include <cmath> // Include the cmath library for the ceil function
+
+using namespace std;
+
+int main() {
+    long long int n, m, a;
+    cin >> n >> m >> a;
+
+    long long int x = ceil(double(n) / a); // Calculate rows
+    long long int y = ceil(double(m) / a); // Calculate columns
+
+    long long int result = x * y; // Total number of flagstones needed
+    cout << result << endl;
+
+    return 0;
+}

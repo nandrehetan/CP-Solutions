@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int res, cur;
+
+int main()
+{
+    char ch;
+    int mult = 1;
+    while (cin >> ch) {
+        if (ch == '+' || ch == '-') {
+            res += mult * cur;
+            cur = 0;
+            mult = ch == '+'? 1: -1;
+        }
+        cur = 10 * cur + (ch - '0');
+    }
+    res += mult * cur;
+    cout << res;
+    return 0;
+}
