@@ -1,29 +1,29 @@
 class Solution {
 public:
     bool validateStackSequences(vector<int>& pushed, vector<int>& popped) {
-        stack<int> s;
-
-        if (pushed.size() == 1) {
-            return pushed == popped;
+        stack<int>s;
+        if(pushed.size()==1){
+            return true;
         }
-
-        int j = 0;
-        for (int i = 0; i < pushed.size(); i++) {
+        if(pushed==popped){
+            return true;
+        }
+        int j=0;
+        for(int i=0;i<pushed.size();i++){
             s.push(pushed[i]);
-            while (!s.empty() && s.top() == popped[j] && j < popped.size()) {
-                int x = s.top();
+            while(!s.empty() && s.top()==popped[j] && j<popped.size()){
+                int x=s.top();
                 s.pop();
-                // cout << x << " ";  // Commented out printing for submission
+                // cout<<x<<" ";
                 j++;
             }
+            
         }
-
-        // Check if there are remaining elements in the stack that need to be popped.
-        while (!s.empty() && s.top() == popped[j] && j < popped.size()) {
+        // cout<<s.top()<<" ";
+        while(!s.empty() &&  s.top()==popped[j]){
             s.pop();
             j++;
         }
-
         return s.empty() && j == popped.size();
     }
 };
